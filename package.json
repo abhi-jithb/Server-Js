@@ -1,0 +1,19 @@
+{
+  "name": "serverjs",
+  "version": "1.0.0",
+  "description": "server.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhi-jithb/Server-Js.git"
+  },
+  "author": "abhijith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhi-jithb/Server-Js/issues"
+  },
+  "homepage": "https://github.com/abhi-jithb/Server-Js#readme"
+}
