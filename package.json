@@ -1,0 +1,19 @@
+{
+  "name": "server-js",
+  "version": "1.0.0",
+  "description": "sever.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev":"nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/abhi-jithb/Server-Js.git"
+  },
+  "author": "Abhijith",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
