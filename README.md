@@ -7,4 +7,10 @@ Running Server => node server.js
  * npm run yourScriptName
  * npm run dev
  * npm => node package manager
-Routers
+Routers 
+
+Used three methods in node :
+* GET
+* POST
+* DELETE
+Faimlarized with map funtion, loop instead of method.
