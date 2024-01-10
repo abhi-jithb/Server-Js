@@ -1,79 +1,35 @@
-const http = require("http");
-const port = 8081;   // local port numbr
+const express = require("express"); // to get the expressjs
 
+const app = express();           // initialise
+app.use(express.json());       // Always *use* JSON format, 
 
-const toDoList = ["learn", "apply", "succeed"];
+const port = 8081;
 
-http
-    .createServer((req, res) => {        // call back function
-        const { method, url } = req;     // console.log(method, url);
+const toDoList = ["Learn", "apply", "succeed"];
+app.get("/todos", (req, res) => {
+    res.status(200).send(toDoList);
+});
+app.post("/todos", (req, res) => {
+    let newToDoItem = req.body.name;          //name =>item-name
+    toDoList.push(newToDoItem);
+    res.status(201).send({ message: "task added" });
+});
+app.delete("/todos", (req, res) => {
+    const deleteItem = req.body.name;
 
-        if (url === "/todos") {
-            if (method === "GET") {
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.write(toDoList.toString());
-            } else if (method === "POST") {
-                let body = "";
-                req
-                    .on("error", (err) => {
-                        console.log(err);
-                    })
-                    .on("data", (chunk) => {
-                        body += chunk;
-                        console.log(chunk);
-                    })
-                    .on("end", () => {                 //call-back function
-                        body = JSON.parse(body);
-
-                        let newToDo = toDoList;        //newToDo to implement post method
-                        newToDo.push(body.item);
-                        newToDo.push(body.date);
-                        console.log(newToDo);
-                        console.log("data: ", body);
-                    });
-            } else if (method === "DELETE") {       //DELETE method
-                let body = "";
-                req
-                    .on("error", (err) => {
-                        console.error(err);
-                    })
-                    .on("data", (chunk) => {
-                        body += chunk;
-                    })
-                    .on("end", () => {
-                        body = JSON.parse(body);
-
-                        let deleteThisItem = body.item;
-
-                        for (let i = 0; i < toDoList.length; i++) {
-                            if (toDoList[i] === deleteThisItem) {
-                                toDoList.splice(i, 1);
-                                break;
-                            } else {
-                                console.error("Error: Match Not Found!!");
-                                break;
-                            }
-                        }
-
-                        // METHOD
-                        /**   toDoList.find((elem, index) => {
-                                                    if (elem === deleteThisItem) {
-                                                        toDoList.splice(index, 1);
-                                                    } else {
-                                                        console.error("Error: Match Not Found!!");
-                                                        // console.exit();
-                                                    }
-                                                }); */
-                    });
-            } else {
-                res.writeHead(501);
-            }
-        } else {
-            res.writeHead(404);
+    for (let i = 0; i < toDoList; i++) {
+        if (toDoList[i] === deleteItem) {
+            toDoList.splice(i, 1);
+            break;
         }
-        res.end();
-    })
-    .listen(port, () => {        // call back function
+        res.status(202).send({ message: `Deleted Item ${req.body.name}` });
+    }
+});
 
-        console.log(`NodeJs Server Started Running on Port: ${port}`);
-    });
+app.all("*", (req, res) => {   // for anykind of methods
+    res.status(501).send();
+});
+
+app.listen(port, () => {
+    console.log(`server started Running on Port ${port}`);
+});
